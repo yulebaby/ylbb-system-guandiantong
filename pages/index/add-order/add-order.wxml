@@ -1,0 +1,32 @@
+<view class='main'>
+    <view class='seacher'>
+        <input placeholder="搜索客户手机号" auto-focus bindinput="phoneInput" />
+        <image src='/assets/images/seacher.png' bindtap='shachPhone'></image>
+    </view>
+    <view class='listmain'>
+        <view class='list_tit'>
+            会员列表
+        </view>
+      <view class='orderMain'>
+          <view class='order_list' wx:if="{{ memberDetail.memberName }}">
+              <view class='order_img'>
+                  <image src='{{ memberDetail.photo ? memberDetail.photo : "http://image.haochengzhang.com/demo/exp_2.jpg" }}'></image>
+                  <view><image src='/assets/images/memberIcon.png'></image></view>
+              </view>
+              <view class='order_detail'>
+                  <view class='order_tit'>
+                      <view class='order_name'>{{ memberDetail.memberName }}</view>
+                      <view class='order_label'> <text>{{ memberDetail.babySex }}孩</text> <text>{{ memberDetail.babyType }}</text> </view>
+                  </view>
+                  <view class='order_btn' data-id="{{ memberDetail.memberId }}" bindtap='orderBtn'>预约游泳</view>
+              </view>
+          </view>
+
+          <view class='noMember' wx:if="{{ !memberDetail.memberName }}">
+              <image src='/assets/images/noMember.png'></image>
+              <view>暂无会员</view>
+          </view>
+      </view>
+
+    </view>
+</view>

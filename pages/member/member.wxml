@@ -1,0 +1,153 @@
+<view class='content'>
+  <view class='header' wx:if="{{ tabNav == 0 }}">
+            <view class='headerNav'>
+              <view class='navList {{ tabNav == 0 ? "cli" : "" }}' bindtap='toggleClick' data-id='0'>
+                  <view>员工业绩</view>
+                  <view></view>
+              </view>
+              <view  class='navList {{ tabNav == 1 ? "cli" : "" }}' bindtap='toggleClick' data-id='1'>
+                <view>员工排名</view>
+                <view></view>
+              </view>
+        </view>
+  </view>
+
+   <view class='index-html' wx:if="{{ tabNav == 0 }}">
+       <view class='total'>
+        <view class='total_top'>
+          <view class='total_tit'>今日实际/任务</view>
+          <view class='total_icon' bindtap='toggleFun'>!</view>
+        </view>
+          <view class='total_explain' wx:if="{{ toggle }}">
+              <view><text>办卡：</text><text>今日门店实际完成收入和门店目标收入（包括商品、办卡、体验卡）</text></view> 
+              <view><text>耗卡：</text><text>今日门店实际耗卡次数和门店目标耗卡次数</text></view> 
+              <view><text>线索：</text><text>今日实际获得新线索数量和门店目标新线索数量</text></view>  
+               <view><text>体验卡：</text><text>今日门店售卖体验卡数量和今日门店目标售卖体验卡数量</text></view> 
+          </view>
+          <view class='total_list'>
+            <scroll-view
+             scroll-x
+              style="height: 234rpx; width:1532rpx; " >
+              <view class='slist' bindtap='toIncome'>
+                  <text>办卡</text>
+                  <text>{{ times }}</text>
+                  <text>{{ storeDetail.finishMoney }}/{{ storeDetail.expectTotalIncome }}</text>
+              </view>
+              <view class='slist' bindtap='toIntegral'>
+                  <text>耗卡</text>
+                  <text>{{ times }}</text>
+                  <text>{{storeDetail.removeCount}}/{{ storeDetail.expectConsumecardNum }}</text>
+              </view>
+              <view class='slist' bindtap='toExperience'>
+                  <text>体验卡</text>
+                  <text>{{ times }}</text>
+                  <text>{{ storeDetail.pravticeCounts }}/{{ storeDetail.expectExperienceNum }}</text>
+              </view>
+              <view class='slist' bindtap='toClue'>
+                  <text>线索</text>
+                  <text>{{ times }}</text>
+                  <text>{{storeDetail.clueCounts}}/{{storeDetail.expectClueNum}}</text>
+              </view>   
+              <view class='slist' bindtap='toAsk'>
+                  <text>回访</text>
+                  <text>{{ times }}</text>
+                  <text>{{storeDetail.callBackNum}}/{{storeDetail.expectCallbackClueNum}}</text>
+              </view>     
+             </scroll-view>            
+          </view>
+
+    </view>
+    <view class='teacher'>
+          <view class='teacher_tit'>老师任务情况</view>
+          <view class='teacher_list' wx:for="{{ list }}" wx:key="id" >
+            <navigator url='/pages/index/detail/detail?teacherId={{ item.teacherId }}' >
+             <view class='headImg'> <image src='{{ item.headImg ? item.headImg : "https://ylbb-wxapp.oss-cn-beijing.aliyuncs.com/storeManagement/memberHeading5633.jpg" }}'></image> </view>
+              <view class='teacher_text'>
+              <view class='text_top'>
+                  <view class='teacher_name'>{{ item.teacherName }}</view>
+                  <view class='teacher_detail'>
+                
+                     查看详情
+                  
+                  </view>
+              </view>
+               <view class='text_center'>
+                  <view class='teacher_data'>耗卡 <text>{{item.removeCount}}/{{item.consumeCard}}</text> </view>
+                  <view class='teacher_data'>线索 <text>{{ item.clueCounts }}/{{ item.clueNum }}</text> </view>
+                  <view class='teacher_data'>体验卡 <text>{{ item.pravticeCounts }}/{{ item.experienceNum }}</text> </view>
+                  <view class='teacher_data'>回访 <text>{{ item.callBackClue }}/{{ item.expectCallbackClue }}</text> </view> 
+              </view>
+              <view class='text_bottom' wx:if="{{ item.workContend == 1 }}">
+                  {{ item.workTime }}-至今 空闲！
+              </view>
+              <view class='text_footer' wx:else>
+                {{ item.workTime }} {{ item.workContend }}
+              </view>
+              </view> 
+              </navigator> 
+          </view>
+    </view>
+   </view>
+
+
+  <view class='memberList' wx:if="{{ tabNav == 1 }}">
+      <view class='headerNav'>
+            <view class='navList {{ tabNav == 0 ? "cli" : "" }}' bindtap='toggleClick' data-id='0'>
+                <view>员工业绩</view>
+                <view></view>
+            </view>
+            <view class='navList {{ tabNav == 1 ? "cli" : "" }}' bindtap='toggleClick' data-id='1'>
+              <view>员工排名</view>
+              <view></view>
+            </view>
+
+                    <view class='detail_tit'>
+            <view class='detail_nav'>
+                <text class='{{ nav_index == 0 ? "cli" :"" }}' data-index='0' bindtap='dateNavClick'>今日</text>
+                <text class='{{ nav_index == 1 ? "cli" :"" }}' data-index='1' bindtap='dateNavClick'>本周</text>
+                <text class='{{ nav_index == 2 ? "cli" :"" }}' data-index='2' bindtap='dateNavClick'>本月</text>
+            </view>
+      </view>
+      </view>
+
+
+
+  <view class='nav'>
+        <view class='nav_list {{tabId == 1? "cli" :""}}' data-id='1' bindtap='navClick'>
+             <view class='nav_name'>积分排名</view> 
+             <view class='nav_icon'></view>
+        </view>
+        <view class='nav_list {{tabId == 2? "cli" :""}}' data-id='2' bindtap='navClick'>
+             <view class='nav_name'>线索数量</view> 
+             <view class='nav_icon'></view>
+        </view>
+          <view class='nav_list {{tabId == 3? "cli" :""}}' data-id='3' bindtap='navClick'>
+             <view class='nav_name'>回访数量</view> 
+             <view class='nav_icon'></view>
+        </view>
+          <view class='nav_list {{tabId == 4? "cli" :""}}' data-id='4' bindtap='navClick'>
+             <view class='nav_name'>耗卡数量</view> 
+             <view class='nav_icon'></view>
+        </view>            
+  </view>
+  <view class='detail'>
+    <view class='detail_main'>
+
+      <view class='detail_text' wx:if="{{ memeberList.length}}">
+            <view class='detail_text_list header'> <text>名次</text> <text>姓名</text>  <text>{{ listHeader }}</text> </view>
+            
+              <view class="detail_text_list" wx:for="{{ memeberList }}" wx:key="index" bindtap='navDetail' data-id="{{ item.teacherId }}" data-count="{{ item.serviceCount }}"  >
+                  <text wx:if="{{ index>2 }}">{{ index>=9 ? (index+1) : '0'+(index+1) }}   </text>
+                  <text wx:else class="{{ index == 0 ? 'cli1' : (index == 1? 'cli2' : (index==2? 'cli3':'') )}}"></text>
+                  <text>{{ item.teacherName ? item.teacherName : item.memberName }}</text>
+                  <text>{{ tabId == 1 ? item.commissionPoint :( tabId == 2 ? item.clueCount : (tabId == 3 ? item.returnVisitNum:  item.serviceCount  ) ) }}</text>
+              </view>          
+      </view>
+      <view class='empty' wx:else>
+          暂无数据
+      </view>
+  </view>
+  </view>
+   </view>
+
+</view>
